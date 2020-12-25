@@ -1,0 +1,2 @@
+require "./ciserver"
+run CIServer

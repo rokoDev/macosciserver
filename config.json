@@ -1,0 +1,14 @@
+{
+    "branches": [
+        {
+            "name": "develop",
+            "prs": true,
+            "pushes": true
+        },
+        {
+            "name": "maser",
+            "prs": true,
+            "pushes": true
+        }
+    ]
+}
