@@ -12,6 +12,15 @@ import argparse
 import shutil
 import sys
 
+def remove_dir(path):
+  command = ['rm'] + ["-rf", path]
+  try:
+    subprocess.run(command, check = True)
+  except subprocess.CalledProcessError as e:
+    s = " "
+    print(f"Command [{s.join(command)}] exit with code {e.returncode}")
+    sys.exit(e.returncode)
+
 def run_cmake(*args):
   command = ['cmake'] + list(args)
   try:
@@ -40,7 +49,7 @@ def cmake_configure_build_test(IS_SHARED_LIBS, NOT_CLEAR_BUILD_DIR, BUILD_TYPE, 
 
   if os.path.exists(BUILD_DIR):
     if not NOT_CLEAR_BUILD_DIR:
-      shutil.rmtree(BUILD_DIR)
+      remove_dir(BUILD_DIR)
       os.makedirs(BUILD_DIR, exist_ok=True)
   else:
     os.makedirs(BUILD_DIR, exist_ok=True)
