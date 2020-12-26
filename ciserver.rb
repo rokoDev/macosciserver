@@ -58,7 +58,7 @@ class CIServer < Sinatra::Base
       commit_sha = pull_request['head']['sha']
       
       send_status(repo_slug, commit_sha, 'pending')
-      result = system("python3 ./checkout_pr.py -PR_TITLE #{prTitle} -FROM_BRANCH #{fromBranch} -FROM_SHA #{fromSHA} -TO_BRANCH #{toBranch} -TO_SHA #{toSHA} -CLONE_URL #{cloneUrl} -OWNER_NAME #{repoOwnerLogin} -REPO_NAME #{repoName} -PR_NUMBER #{prNumber} -CI_WORK_PATH #{ciWorkPath}")
+      result = system("python3 ./checkout_pr.py -PR_TITLE \"#{prTitle}\" -FROM_BRANCH \"#{fromBranch}\" -FROM_SHA \"#{fromSHA}\" -TO_BRANCH \"#{toBranch}\" -TO_SHA \"#{toSHA}\" -CLONE_URL \"#{cloneUrl}\" -OWNER_NAME \"#{repoOwnerLogin}\" -REPO_NAME \"#{repoName}\" -PR_NUMBER \"#{prNumber}\" -CI_WORK_PATH \"#{ciWorkPath}\"")
       if result
         send_status(repo_slug, commit_sha, 'success')
       else
@@ -91,7 +91,7 @@ class CIServer < Sinatra::Base
 
       send_status(repo_slug, commitSHA, 'pending')
       puts "pending status sent!"
-      result = system("python3 ./checkout_branch.py -BRANCH_NAME #{branchName} -COMMIT_SHA #{commitSHA} -CLONE_URL #{cloneUrl} -OWNER_NAME #{repoOwnerLogin} -REPO_NAME #{repoName} -CI_WORK_PATH #{ciWorkPath}")
+      result = system("python3 ./checkout_branch.py -BRANCH_NAME \"#{branchName}\" -COMMIT_SHA \"#{commitSHA}\" -CLONE_URL \"#{cloneUrl}\" -OWNER_NAME \"#{repoOwnerLogin}\" -REPO_NAME \"#{repoName}\" -CI_WORK_PATH \"#{ciWorkPath}\"")
       if result
       	send_status(repo_slug, commitSHA, 'success')
       else
@@ -107,21 +107,20 @@ class CIServer < Sinatra::Base
 
     def is_prs_allowed(branch_name)
     	branchConfig = @config['branches'].find {|u| u['name'] == branch_name}
-        if branchConfig && branchConfig['prs']
-          return true
-        end
-        puts "Processing pull requests for branch <#{branch_name}> isn't configurated"
-        return false
+      if branchConfig && branchConfig['prs']
+        return true
+      end
+      puts "Processing pull requests for branch <#{branch_name}> isn't configurated"
+      return false
     end
 
     def is_pushes_allowed(branch_name)
     	branchConfig = @config['branches'].find {|u| u['name'] == branch_name}
-
-        if branchConfig && branchConfig['pushes']
-          return true
-        end
-        puts "Processing pushes for branch <#{branch_name}> isn't configurated"
-        return false
+      if branchConfig && branchConfig['pushes'] == 'true'
+        return true
+      end
+      puts "Processing pushes for branch <#{branch_name}> isn't configurated"
+      return false
     end
   end
 end
