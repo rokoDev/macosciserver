@@ -106,20 +106,22 @@ class CIServer < Sinatra::Base
     end
 
     def is_prs_allowed(branch_name)
-    	branchConfig = @config['branches'].find {|u| u['name'] == branch_name}
+      branch_name_str = "#{branch_name}"
+      branchConfig = @config['branches'].find {|u| u['name'] == branch_name_str}
       if branchConfig && branchConfig['prs']
         return true
       end
-      puts "Processing pull requests for branch <#{branch_name}> isn't configurated"
+      puts "Processing pull requests for branch <#{branch_name_str}> isn't configurated"
       return false
     end
 
     def is_pushes_allowed(branch_name)
-    	branchConfig = @config['branches'].find {|u| u['name'] == branch_name}
-      if branchConfig && branchConfig['pushes'] == 'true'
+      branch_name_str = "#{branch_name}"
+      branchConfig = @config['branches'].find {|u| u['name'] == branch_name_str}
+      if branchConfig && branchConfig['pushes']
         return true
       end
-      puts "Processing pushes for branch <#{branch_name}> isn't configurated"
+      puts "Processing pushes for branch <#{branch_name_str}> isn't configurated"
       return false
     end
   end
