@@ -123,10 +123,10 @@ def main():
   cmake_configure_build_test(False, True, 'Release', 'Xcode', BUILD_DIR, PROJECT_ROOT_PATH)
 
   BUILD_DIR = os.path.join(PROJECT_ROOT_PATH, 'build', 'Ninja', 'Debug')
-  cmake_configure_build_test(False, NOT_CLEAR_BUILD_DIR, 'Debug', 'Xcode', BUILD_DIR, PROJECT_ROOT_PATH)
+  cmake_configure_build_test(False, NOT_CLEAR_BUILD_DIR, 'Debug', 'Ninja', BUILD_DIR, PROJECT_ROOT_PATH)
 
   BUILD_DIR = os.path.join(PROJECT_ROOT_PATH, 'build', 'Ninja', 'Release')
-  cmake_configure_build_test(False, NOT_CLEAR_BUILD_DIR, 'Release', 'Xcode', BUILD_DIR, PROJECT_ROOT_PATH)
+  cmake_configure_build_test(False, NOT_CLEAR_BUILD_DIR, 'Release', 'Ninja', BUILD_DIR, PROJECT_ROOT_PATH)
   sys.exit(0)
 
 if __name__ == "__main__":
